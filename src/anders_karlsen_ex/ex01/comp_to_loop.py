@@ -10,4 +10,6 @@ def squares_by_loop(n):
     return squares
 
 
-
+if __name__ == '__main__':
+    if squares_by_loop(n=20) != squares_by_comp(n=20):
+        print('ERROR!')
