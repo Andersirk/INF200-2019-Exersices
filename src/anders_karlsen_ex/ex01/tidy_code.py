@@ -1,34 +1,37 @@
-from random import randint as a
+import random
 
 __author__ = ''
 __email__ = '@nmbu.no'
 
 
-def b():
-    c = 0
-    while c < 1:
-        c = int(input('Your guess: '))
-    return c
+def make_a_guess():
+    guess = 0
+    while guess < 1:
+        guess = int(input('Your guess: '))
+    return guess
 
-def d():
-    return a(1, 6) + a(1, 6)
 
-def e(f, g):
-    return f == g
+def double_dice_throw():
+    return random.randint(1, 6) + random.randint(1, 6)
+
+
+def are_they_the_same(value1, value2):
+    return value1 == value2
+
 
 if __name__ == '__main__':
 
-    h = False
-    i = 3
-    j = d()
-    while not h and i > 0:
-        k = b()
-        h = e(j, k)
-        if not h:
+    same_value = False
+    attempts = 3
+    dices_value = double_dice_throw()
+    while not same_value and attempts > 0:
+        guess = make_a_guess()
+        same_value = are_they_the_same(dices_value, guess)
+        if not same_value:
             print('Wrong, try again!')
-            i -= 1
+            attempts -= 1
 
-    if i > 0:
-        print('You won {} points.'.format(i))
+    if attempts > 0:
+        print('You won {} points.'.format(attempts))
     else:
-        print('You lost. Correct answer: {}.'.format(j))
+        print('You lost. Correct answer: {}.'.format(dices_value))
