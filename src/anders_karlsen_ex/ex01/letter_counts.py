@@ -1,6 +1,6 @@
-def letter_freq(text):
+def letter_freq(txt):
     counter = {}
-    lowered_text = text.lower()
+    lowered_text = txt.lower()
     sorted_lowered_text = sorted(lowered_text)
 
     for character in sorted_lowered_text:
@@ -10,6 +10,8 @@ def letter_freq(text):
             counter[character] = 1
     return counter
 
+
+# If i change txt to text, it breaks pep8, why?
 
 if __name__ == '__main__':
     text = input('Please enter text to analyse: ')
