@@ -16,9 +16,7 @@ def letter_freq(txt):
 
 def entropy(message):
     counter = letter_freq(message)
-    total_number_of_letters = 0
-    for value in counter.values():
-        total_number_of_letters += value
+    total_number_of_letters = sum(counter.values())
     freq_of_letter_in_message = {}
     entropy = 0
     for key, value in counter.items():
