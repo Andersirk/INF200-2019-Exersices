@@ -1,5 +1,12 @@
 def bubble_sort(data):
-    pass
+    # data = [2,5,6,3,2,3]
+    data_list = list(data)
+    for count, _ in enumerate(data_list, 1):
+        for x in range(len(data_list)-count):
+            if data_list[x] > data_list[x+1]:
+                data_list[x], data_list[x+1] = data_list[x+1], data_list[x]
+    return data_list
+
 
 if __name__ == "__main__":
 
