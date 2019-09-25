@@ -14,6 +14,7 @@ def char_counts(textfilename):
         list_of_lines = file.readlines()
         list_of_lines_no_newline = [line[:-2] for line in list_of_lines]
         string = "".join(list_of_lines_no_newline)
+        #string = list_of_lines
         freq_of_characters = Counter(string)
         list_character_freq = [0 for _ in range(256)]
         for key, value in freq_of_characters.items():
