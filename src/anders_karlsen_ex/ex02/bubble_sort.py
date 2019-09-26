@@ -1,5 +1,4 @@
 def bubble_sort(data):
-    # data = [2,5,6,3,2,3]
     data_list = list(data)
     for count, _ in enumerate(data_list, 1):
         for x in range(len(data_list)-count):
