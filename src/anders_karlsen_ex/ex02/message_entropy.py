@@ -15,16 +15,21 @@ def letter_freq(txt):
 
 
 def entropy(message):
+    """
+    Takes a message as a string and
+
+    Returns
+    -------
+    the entropy of the message as bits
+    """
     counter = letter_freq(message)
-    total_number_of_letters = sum(counter.values())
-    freq_of_letter_in_message = {}
-    entropy = 0
-    for key, value in counter.items():
-        freq_of_letter_in_message[ord(key)] = value/total_number_of_letters
-    for value in freq_of_letter_in_message.values():
-        entropy += value * log2(value)
-    entropy2 = -1 * entropy
-    return entropy2
+    total_nmb_letters = sum(counter.values())
+    freq_of_letter_in_message = {
+        ord(char): chr_amount/total_nmb_letters for char, chr_amount in counter.items()}
+    calculated_entropy = -1 * sum([
+        freq_of_char * log2(freq_of_char) for freq_of_char in freq_of_letter_in_message.values()
+    ])
+    return calculated_entropy
 
 
 if __name__ == "__main__":
