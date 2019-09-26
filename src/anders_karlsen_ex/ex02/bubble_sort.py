@@ -1,5 +1,12 @@
-def bubble_sort(data):
-    data_list = list(data)
+def bubble_sort(data_list_or_tuple):
+    """
+    Takes a list or tuple of numbers and sorts the list.
+
+    Returns
+    -------
+    a sorted version of the parameter list, bubble sorted
+    """
+    data_list = list(data_list_or_tuple)
     for count, _ in enumerate(data_list, 1):
         for x in range(len(data_list)-count):
             if data_list[x] > data_list[x+1]:
