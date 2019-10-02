@@ -59,7 +59,8 @@ def test_unordered_elements():
 def test_error():
     """Tests that the median function raises valuerror
     for empty list"""
-    pass
+    with pytest.raises(ValueError):
+        median([])
 
 
 def test_original_unchanged():
