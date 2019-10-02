@@ -47,7 +47,7 @@ def test_ordered_elements():
 def test_reverse_ordered_elements():
     """Tests that the median function returns correct value for
     a list with reverse ordered elements"""
-    pass
+    assert median([5, 4, 3, 2, 1]) == 3
 
 
 def test_unordered_elements():
