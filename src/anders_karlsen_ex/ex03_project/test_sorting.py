@@ -64,7 +64,7 @@ def test_original_unchanged(ex_reverse_sort_list):
     Now data shall still contain [3, 2, 1].
     """
     data = ex_reverse_sort_list
-    sorted_data = bubble_sort(data)
+    bubble_sort(data)
     assert data == ex_reverse_sort_list
 
 
