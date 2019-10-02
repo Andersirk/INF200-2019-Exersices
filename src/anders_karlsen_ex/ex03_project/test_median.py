@@ -23,7 +23,7 @@ def test_one_element():
     Tests that the median function
     returns correct value for one-element list
     """
-    pass
+    assert median([5]) == 5
 
 
 def test_odd_number_elements():
