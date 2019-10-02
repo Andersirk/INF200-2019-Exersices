@@ -3,6 +3,8 @@
 __author__ = 'Anders Karlsen'
 __email__ = 'anderska@nmbu.no'
 
+import pytest
+
 
 def median(data):
     """
@@ -11,11 +13,12 @@ def median(data):
     :param data: An iterable of containing numbers
     :return: Median of data
     """
-
+    if not data:
+        raise ValueError
     sdata = sorted(data)
     n = len(sdata)
     return (sdata[n//2] if n % 2 == 1
-        else 0.5 * (sdata[n//2 - 1] + sdata[n//2]))
+            else 0.5 * (sdata[n//2 - 1] + sdata[n//2]))
 
 
 def test_one_element():
@@ -66,7 +69,9 @@ def test_error():
 def test_original_unchanged():
     """test that ensures that the median function
      leaves the original data unchanged"""
-    pass
+    data = [1, 4, 7, 8, 9]
+    median(data)
+    assert data == [1, 4, 7, 8, 9]
 
 
 def test_tuples_and_lists():
