@@ -35,7 +35,7 @@ def test_odd_number_elements():
 def test_even_number_elements():
     """Tests that the median function returns correct value for
     a list with even number of elements"""
-    pass
+    assert median([1, 2, 3, 4]) == (2+3)/2
 
 
 def test_ordered_elements():
