@@ -3,18 +3,23 @@
 __author__ = "Kåre Johnsen", "Anders Karlsen"
 __email__ = "kajohnse@nmbu.no", "anderska@nmbu.no"
 
-from random import randint
+import random
 
 class Players:
-    def __init__(self):
+    def __init__(self, seed):
         self.current_position = 0
         self.number_of_throws = 0
+        self.user_defined_seed = seed
 
     def position(self):
         return self.current_position
 
     def throw_dice_and_move(self):
-        self.current_position += randint(1,6)
+        if self.user_defined_seed is None:
+            self.current_position += random.randint(1, 6)
+        else:
+            random.seed(self.user_defined_seed)
+            self.current_position += random.randint(1, 6)
         self.number_of_throws += 1
 
     def check_ladder(self):
@@ -37,7 +42,7 @@ class Players:
         return False
 
 
-def single_game(num_players):
+def single_game(num_players, seed=None):
     """
     Returns duration of single game.
 
@@ -45,13 +50,16 @@ def single_game(num_players):
     ---------
     num_players : int
         Number of players in the game
+    seed : int
+        used to initate the random number generator if inputed,
+        else uses default seed generation
 
     Returns
     -------
     num_moves : int
         Number of moves the winning player needed to reach the goal
     """
-    players = [Players() for _ in range(num_players)]
+    players = [Players(seed) for _ in range(num_players)]
     any_winners = False
     winning_player = None
 
@@ -64,15 +72,6 @@ def single_game(num_players):
                 winning_player = player
                 any_winners = True
     return winning_player.number_of_throws
-
-
-total_results = 0
-
-for _ in range(1000):
-    total_results += single_game(1000)
-print(total_results/1000)
-
-
 
 
 def multiple_games(num_games, num_players):
@@ -89,9 +88,10 @@ def multiple_games(num_games, num_players):
     Returns
     -------
     num_moves : list
-        List with the numbedr of moves needed in each game.
+        List with the number of moves needed in each game.
     """
-    pass
+    return [single_game(num_players) for _ in range(num_games)]
+
 
 def multi_game_experiment(num_games, num_players, seed):
     """
@@ -111,4 +111,7 @@ def multi_game_experiment(num_games, num_players, seed):
     num_moves : list
         List with the number of moves needed in each game.
     """
-    pass
+    return [single_game(num_players, seed) for _ in range(num_games)]
+
+
+print(multi_game_experiment(2, 4, 123))
