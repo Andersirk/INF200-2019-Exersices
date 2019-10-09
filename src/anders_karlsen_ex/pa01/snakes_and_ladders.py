@@ -6,20 +6,15 @@ __email__ = "kajohnse@nmbu.no", "anderska@nmbu.no"
 import random
 
 class Players:
-    def __init__(self, seed):
+    def __init__(self):
         self.current_position = 0
         self.number_of_throws = 0
-        self.user_defined_seed = seed
 
     def position(self):
         return self.current_position
 
     def throw_dice_and_move(self):
-        if self.user_defined_seed is None:
-            self.current_position += random.randint(1, 6)
-        else:
-            random.seed(self.user_defined_seed)
-            self.current_position += random.randint(1, 6)
+        self.current_position += random.randint(1, 6)
         self.number_of_throws += 1
 
     def check_ladder(self):
@@ -59,10 +54,11 @@ def single_game(num_players, seed=None):
     num_moves : int
         Number of moves the winning player needed to reach the goal
     """
-    players = [Players(seed) for _ in range(num_players)]
+    players = [Players() for _ in range(num_players)]
     any_winners = False
     winning_player = None
-
+    if seed is not None:
+        random.seed(seed)
     while not any_winners:
         for player in players:
             player.throw_dice_and_move()
@@ -112,6 +108,3 @@ def multi_game_experiment(num_games, num_players, seed):
         List with the number of moves needed in each game.
     """
     return [single_game(num_players, seed) for _ in range(num_games)]
-
-
-print(multi_game_experiment(2, 4, 123))
