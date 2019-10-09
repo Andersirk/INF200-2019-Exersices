@@ -4,6 +4,8 @@ __author__ = "Kåre Johnsen", "Anders Karlsen"
 __email__ = "kajohnse@nmbu.no", "anderska@nmbu.no"
 
 import random
+import statistics as st
+
 
 class Players:
     def __init__(self):
@@ -37,7 +39,7 @@ class Players:
         return False
 
 
-def single_game(num_players, seed=None):
+def single_game(num_players):
     """
     Returns duration of single game.
 
@@ -45,9 +47,6 @@ def single_game(num_players, seed=None):
     ---------
     num_players : int
         Number of players in the game
-    seed : int
-        used to initate the random number generator if inputed,
-        else uses default seed generation
 
     Returns
     -------
@@ -57,8 +56,6 @@ def single_game(num_players, seed=None):
     players = [Players() for _ in range(num_players)]
     any_winners = False
     winning_player = None
-    if seed is not None:
-        random.seed(seed)
     while not any_winners:
         for player in players:
             player.throw_dice_and_move()
@@ -107,4 +104,14 @@ def multi_game_experiment(num_games, num_players, seed):
     num_moves : list
         List with the number of moves needed in each game.
     """
-    return [single_game(num_players, seed) for _ in range(num_games)]
+    random.seed(seed)
+    return [single_game(num_players) for _ in range(num_games)]
+
+
+if __name__ == "__main__":
+    hundred_games_ex = multi_game_experiment(100, 4, 6969)
+    print(f'The longest game duration is {max(hundred_games_ex)} rounds\n'
+          f'The shortest game duration is {min(hundred_games_ex)} rounds\n'
+          f'The median game duration is {st.median(hundred_games_ex)} rounds\n'
+          f'The mean game duration is {st.mean(hundred_games_ex)} rounds, '
+          f'and its standard deviation is {st.stdev(hundred_games_ex):.3f}')
