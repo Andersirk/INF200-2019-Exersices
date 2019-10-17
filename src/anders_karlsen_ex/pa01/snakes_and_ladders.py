@@ -105,13 +105,13 @@ def multi_game_experiment(num_games, num_players, seed):
         List with the number of moves needed in each game.
     """
     random.seed(seed)
-    return [single_game(num_players) for _ in range(num_games)]
+    return multiple_games(num_games, num_players)
 
 
 if __name__ == "__main__":
-    hundred_games_ex = multi_game_experiment(100, 4, 6969)
-    print(f'The longest game duration is {max(hundred_games_ex)} rounds\n'
-          f'The shortest game duration is {min(hundred_games_ex)} rounds\n'
-          f'The median game duration is {st.median(hundred_games_ex)} rounds\n'
-          f'The mean game duration is {st.mean(hundred_games_ex)} rounds, '
-          f'and its standard deviation is {st.stdev(hundred_games_ex):.3f}')
+    sample_game = multi_game_experiment(100, 4, 6969)
+    print(f'The longest game duration is {max(sample_game)} rounds\n'
+          f'The shortest game duration is {min(sample_game)} rounds\n'
+          f'The median game duration is {st.median(sample_game):.1f} rounds\n'
+          f'The mean game duration is {st.mean(sample_game)} rounds, '
+          f'and its standard deviation is {st.stdev(sample_game):.3f}')
