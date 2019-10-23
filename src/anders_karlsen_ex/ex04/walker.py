@@ -18,10 +18,7 @@ class Walker:
         self.position += 1 if randthrow == 2 else -1
 
     def is_at_home(self):
-        if self.position == self.home:
-            return True
-        else:
-            return False
+        return True if self.position == self.home else False
 
     def get_position(self):
         return self.position
