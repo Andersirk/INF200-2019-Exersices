@@ -7,10 +7,11 @@ import random
 
 
 class Walker:
-    def __init__(self, starting_position, home_location):
-        self.position = starting_position
-        self.home = home_location
+    def __init__(self, start, home, **kwargs):
+        self.position = start
+        self.home = home
         self.number_of_steps = 0
+        self.start = start
 
     def move(self):
         self.number_of_steps += 1
@@ -30,9 +31,13 @@ class Walker:
             self.move()
         return self.number_of_steps
 
+    def reset_values(self):
+        self.position = self.start
+        self.number_of_steps = 0
 
-class Simulation:
-    def __init__(self, start, home, input_seed):
+
+class Simulation(Walker):
+    def __init__(self, start, home, seed, **kwargs):
         """
         Initialise the simulation
 
@@ -45,9 +50,8 @@ class Simulation:
         input_seed : int
             Random generator seed
         """
-        self.start = start
-        self.home = home
-        self.seed = input_seed
+        super().__init__(start, home, **kwargs)
+        self.seed = seed
 
     def single_walk(self):
         """
@@ -58,8 +62,11 @@ class Simulation:
         int
             The number of steps taken
         """
-        random.seed(self.seed)
-        return Walker(self.start, self.home).walk_me_home_return_steps()
+        if self.seed is not None:
+            random.seed(self.seed)
+        single_walk_steps = super().walk_me_home_return_steps()
+        super().reset_values()
+        return single_walk_steps
 
     def run_simulation(self, num_walks):
         """
@@ -75,9 +82,13 @@ class Simulation:
         list[int]
             List with the number of steps per walk
         """
-        random.seed(self.seed)
-        return [Walker(self.start, self.home).walk_me_home_return_steps()
-                for _ in range(num_walks)]
+        if self.seed is not None:
+            random.seed(self.seed)
+        list_steps_taken = []
+        for _ in range(num_walks):
+            list_steps_taken.append(super().walk_me_home_return_steps())
+            super().reset_values()
+        return list_steps_taken
 
 
 if __name__ == "__main__":
