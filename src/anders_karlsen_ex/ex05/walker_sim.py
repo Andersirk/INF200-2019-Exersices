@@ -37,7 +37,7 @@ class Walker:
 
 
 class Simulation(Walker):
-    def __init__(self, start, home, seed, **kwargs):
+    def __init__(self, start, home, start_seed, **kwargs):
         """
         Initialise the simulation
 
@@ -51,7 +51,7 @@ class Simulation(Walker):
             Random generator seed
         """
         super().__init__(start, home, **kwargs)
-        self.seed = seed
+        self.seed = start_seed
 
     def single_walk(self):
         """

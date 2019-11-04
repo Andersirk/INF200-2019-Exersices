@@ -41,7 +41,7 @@ class BoundedSimulation(BoundedWalker, Simulation):
     def __init__(self, start, home, seed, left_limit, right_limit):
         super().__init__(start,
                          home,
-                         seed=seed,
+                         start_seed=seed,
                          left_limit=left_limit,
                          right_limit=right_limit)
 
