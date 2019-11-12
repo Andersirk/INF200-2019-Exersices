@@ -6,8 +6,10 @@ __email__ = "anderska@nmbu.no", "kajohnse@nmbu.no"
 import random
 from collections import Counter
 
+
 class Board:
     def __init__(self, *args, **kwargs):
+        self.extra = args, kwargs
         self.ladders = {1: 40, 8: 10, 36: 52, 43: 62, 49: 79, 65: 82, 68: 85}
         self.snakes = {25: 5, 33: 3, 42: 30, 56: 37, 64: 27, 74: 12, 87: 70}
         self.resilient_move = False
@@ -32,7 +34,7 @@ class Board:
 
 class Player:
     def __init__(self, board):
-        self.board = board()
+        self.board = board
         self.position = 0
         self.number_of_throws = 0
 
@@ -73,20 +75,22 @@ class LazyPlayer(Player):
 
 
 class Simulation:
-    def __init__(self, seed, randomize_players, list_of_players):
+    def __init__(self, player_field, randomize_players=True, seed=69, **kwargs):
         self.seed = seed
         if randomize_players:
-            random.shuffle(list_of_players)
-        self.list_of_players = list_of_players
+            random.shuffle(player_field)
+        self.list_of_players = player_field
         self.simulation_list = []
 
     def single_game(self):
-        list_of_initiated_players = [player(Board) for player in self.list_of_players]
+        list_of_initiated_players = [
+            player(Board()) for player in self.list_of_players
+        ]
         while True:
             for player in list_of_initiated_players:
                 player.move()
                 if player.board.goal_reached(player.position):
-                    return (player.number_of_throws, type(player).__name__)
+                    return player.number_of_throws, type(player).__name__
 
     def run_simulation(self, number_of_games):
         for _ in range(number_of_games):
@@ -96,25 +100,35 @@ class Simulation:
         return self.simulation_list
 
     def winners_per_type(self):
-        return Counter(element[0] for element in self.simulation_list)
+        winners_dict = dict(
+            Counter(element[1] for element in self.simulation_list)
+        )
+        unique_players = set([elem.__name__ for elem in self.list_of_players])
+        for element in unique_players:
+            if element not in winners_dict.keys():
+                winners_dict[element] = 0
+        return winners_dict
 
     def durations_per_type(self):
         duration_dict = {}
         for element in self.simulation_list:
-            strelem = str(element[1])
-            if strelem in duration_dict.keys():
-                duration_dict[strelem].append(element[0])
+            str_elem = str(element[1])
+            if str_elem in duration_dict.keys():
+                duration_dict[str_elem].append(element[0])
             else:
-                duration_dict[strelem] = [element[0]]
+                duration_dict[str_elem] = [element[0]]
         return duration_dict
 
-
     def players_per_type(self):
-        return Counter(elem.__name__ for elem in self.list_of_players)
+        return dict(Counter(elem.__name__ for elem in self.list_of_players))
+
 
 if __name__ == "__main__":
-    testert = Simulation(69, True, [Player, ResilientPlayer, LazyPlayer, ResilientPlayer])
+    testert = Simulation(
+    [Player, ResilientPlayer, LazyPlayer, ResilientPlayer]
+    )
     testert.run_simulation(10)
     print(testert.get_results())
+    print(testert.winners_per_type())
     print(testert.durations_per_type())
     print(testert.players_per_type())
