@@ -75,7 +75,7 @@ class LazyPlayer(Player):
 
 
 class Simulation:
-    def __init__(self, player_field, randomize_players=True, seed=69, **kwargs):
+    def __init__(self, player_field, randomize_players=True, seed=None, **kwargs):
         self.seed = seed
         if randomize_players:
             random.shuffle(player_field)
@@ -125,7 +125,7 @@ class Simulation:
 
 if __name__ == "__main__":
     testert = Simulation(
-    [Player, ResilientPlayer, LazyPlayer, ResilientPlayer]
+    [Player, ResilientPlayer, LazyPlayer, ResilientPlayer], seed=69
     )
     testert.run_simulation(10)
     print(testert.get_results())
