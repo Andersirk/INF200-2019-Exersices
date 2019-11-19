@@ -7,8 +7,7 @@ Minimal set of compatibility tests for PA02.
 __author__ = "Anders Karlsen", "Kåre Johnsen"
 __email__ = "anderska@nmbu.no", "kajohnse@nmbu.no"
 
-import snakes_simulation as cs
-import pytest
+import src.anders_karlsen_ex.pa02.snakes_simulation as cs
 
 
 def test_winning_numbers():
@@ -23,5 +22,3 @@ def test_move():
     a.move()
     pos2 = a.position
     assert pos1 != pos2
-
-def

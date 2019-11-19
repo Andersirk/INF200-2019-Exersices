@@ -184,11 +184,11 @@ class Simulation:
 
 
 if __name__ == "__main__":
-    testert = Simulation(
+    testsim = Simulation(
         [Player, ResilientPlayer, LazyPlayer, ResilientPlayer], seed=69
     )
-    testert.run_simulation(10)
-    print(testert.get_results())
-    print(testert.winners_per_type())
-    print(testert.durations_per_type())
-    print(testert.players_per_type())
+    testsim.run_simulation(10)
+    print(testsim.get_results())
+    print(testsim.winners_per_type())
+    print(testsim.durations_per_type())
+    print(testsim.players_per_type())
